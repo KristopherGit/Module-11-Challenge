@@ -179,7 +179,7 @@ The main tasks outlined in this project will include:
     <img width= "50%" src="MercadoLibre_Prophet_Future_Sales.png">
 </p>
 <p align= "center" width="175">
-    <img width= "50%" src="MercadoLibre_Prophet_Future_Sales_2">
+    <img width= "50%" src="MercadoLibre_Prophet_Future_Sales_2.png">
 </p>
 
 <i>Figure 12. Predictions for probable upcoming future sales revenue for MercadoLibre using the Prophet model prediction toolkit (in millions USD) Based on the forecast information generated above, the sales revenue forecast for the following quarter is expected to be 969.61M (USD) with a worst case scenario of 887.91M (USD), and a best-case top forecast revenue of 1,050.94M (USD)..</i>
