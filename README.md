@@ -14,10 +14,10 @@ The main tasks outlined in this project will include:
 
 1.) Step 1: Installing and importing the required libraries and dependencies including Pystan, (Facebook) Prophet, hvPlot, Holoviews, datetime, and Matplotlib.  
 <br>
-1b.) Step 1b: Finding patterns in the hourly google search traffic that may be of use. Essentially, one of the main sub-tasks of the assignment/program is to see if Google search traffic has any link/correlation to financial events at the company. Or is the search traffic data just representative of random noise. The data here is first read from a locally sourced file, put into a Panda's DataFrame. Afterwards the data is then sliced and analyzed for the month of May 2020 (coinciding with the release of MercadoLibre's quarterly financial results). HvPlots is utilized to visually represent the results. The data set is also used to calculate the total search traffic for the month and then compared to the monthly median across all months. (See Figure 1 & 2)
+1b.) Step 1b: Finding patterns in the hourly Google Search traffic that may be of use. Essentially, one of the main sub-tasks of the program is to see if Google Search traffic has any link/correlation to financial events at the company. Or, alternatively, is the search traffic data just representative of random noise. The data here is first read from a locally sourced file and put into a Panda's DataFrame. Afterwards, the data is then sliced and analyzed for the month of May 2020 (coinciding with the release of MercadoLibre's quarterly financial results). HvPlots is utilized to visually represent the results. The data set is also used to calculate the total search traffic for the month and then compared to the monthly median across all months. (See Figure 1 & 2)
 <br>
 <br>
-2.) Step 2: Next, hourly search traffic data was isolated and analyzed, per marketing department instructions. The goal was to predict interest in the company & platform at any time of day. The theory being, that they can more efficiently advertise and get a higher ROI from their marketing budget deficit if they can pinpoint the optimal advertising windows. The is completed by grouping the hourly search data and plotting the average traffic by the day of the week. This was done by compartmentalizing search traffic volume into indexed 'hours' [index.hour] and indexed 'days of the week' [index.dayofweek] as separate variable lists. Using hvPlot, they were plotted against one another in order to form a heatmap that compared search traffic during each day of the week as a function of hours of the day. Additionally, search traffic trends were found to be in an increasing uptrend through the last quarter of the year prior to Christmas, accompanied with a sharp drop afterwards. Lulls in traffic volume appear to occur right after Christmas, and during week 34 of the year. (See Figure 3, 4 & 5)
+2.) Step 2: Next, hourly search traffic data was isolated and analyzed, per marketing department instructions. The goal was to predict interest in the company & platform at any time of day. The theory being, that they can more efficiently advertise and get a higher ROI from their marketing budget deficit if they can pinpoint the optimal advertising windows. This is achieved by grouping the hourly search data and plotting the average traffic by the day of the week. This was done by compartmentalizing search traffic volume into indexed 'hours' [index.hour] and indexed 'days of the week' [index.dayofweek] as separate variable lists. Using hvPlot, they were plotted against one another in order to form a heatmap that compared search traffic during each day of the week as a function of hours of the day. Additionally, search traffic trends were found to be in an increasing uptrend through the last quarter of the year prior to Christmas, accompanied with a sharp drop afterwards. Lulls in traffic volume appear to occur right after Christmas, and during week 34 of the year. (See Figure 3, 4 & 5)
 <br>
 <br>
 3.) Step 3: Afterwards, the relationship between search data volume and the company's stock price is analyzed to check for correlation. Stock price data, once again, is read in using panda's read_csv and the stock price data is plotted (See Figure 6). The stock price data and search data (dataframe for Google Trends created earlier) is then concatenated to a single dataframe. The time series indexing of this dataframe was then sliced between 2020-01 and 2020-06 (in order to analyze the first half of the year during and after the initial onslaught of the COVID-19 pandemic to see how e-commerce companies adapted & responded to the evolving market environment). This is then again plotted as a visual comparison chart (See Figure 7). A new column in the dataframe called 'Lagged Search Trends' that offsets search traffic by one hour is added. Ontop of this, an additional two columns of data are added to the dataframe to capture 'Stock Volatility' and 'Hourly Stock Return' (percentage of change in the company stock price on an hourly basis). (See Figure 8)
@@ -26,14 +26,13 @@ The main tasks outlined in this project will include:
 4.) Step 4: A time series model that analyzes & forecasts patterns in the hourly search data is then created. A Prophet model is first instantiated with the Google Search data set to said model. Estimations/predictions are made with the model framework & the forecast is then plotted in order to predict the near-term popularity of MercadoLibre. (See Figure 9). Individual time series components of the model are also produced for analysis. (See Figure 10)
 <br>
 <br>
-5.) Step 5: The next portion of the program involves assisting the finance group with forecasting the total sales for the next quarter in order to give some guidance in terms of budget planning and to guide expectations for company investors. Here, historical sales revenue (in millions USD) is read in as a dataframe and then applied to another instantiated Prophet model in order to forecast future probable trends.
+5.) Step 5: The next portion of the program involves assisting the finance group with forecasting the total sales for the next quarter in order to give some guidance in terms of budget planning and to guide expectations for company investors. Here, historical sales revenue (in millions USD) is read in as a dataframe and then applied to another instantiated Prophet model in order to forecast future probable trends. (See Figure 11 & 12)
 <br>
 <br>
-7.)
 
 ## Data Analysis Results and Observations
 
-### <u>MercadoLibre - Google Search Trend data for the month of May 2020</u>
+### <u>MercadoLibre - Google Search Trend Data for the Month of May 2020</u>
 
 <br>
 
@@ -62,7 +61,7 @@ The main tasks outlined in this project will include:
 <p align= "center" width="50">
     <img width= "50%" src="MercadoLibre_Average_Traffic_By_Day_of_the_Week.png">
 </p>
-<i>Figure 3. MercadoLibre search traffic displaying maximum search traffic volume during Tuesday's, followed by Wednesday in a decreasing trend as the week progresses.</i>
+<i>Figure 3. MercadoLibre search traffic displaying maximum search traffic volume during Tuesday's [*actually normalized to Monday's - see argument outlined below], followed by Wednesday in a decreasing trend as the week progresses.</i>
 
 <br>
 
@@ -73,7 +72,7 @@ The main tasks outlined in this project will include:
 <p align= "center" width="175">
     <img width= "50%" src="MercadoLibre_Hour_of_Day.png">
 </p>
-<i>Figure 4. Hour of the day vs day of the week search traffic volume appears to indicate that Monday/Tuesday around 23:00hr-01:00hr are the busiest. However, when taking into consideration & converting the Seattle, WA based nomial UTC timestamp, this translates to an hourly shift around 9pm local Uruguay, Montevideo time (9pm local GMT-3 time, Monday). This makes more sense as customers/consumers are more likely to be shopping in the later hours of the evening on Monday, followed by Tuesday night. See below for a more detailed explanation on the local time shift rationale.</i>
+<i>Figure 4. Hour of the day vs day of the week search traffic volume appears to indicate that Monday/Tuesday around 23:00hr-01:00hr are the busiest. However, when taking into consideration & converting the Seattle, WA based nominal UTC timestamp, this translates to an hourly shift around 9pm local Uruguay, Montevideo time (9pm local GMT-3 time, Monday). This makes more sense as customers/consumers are more likely to be shopping in the later hours of the evening on Monday, followed by Tuesday night. See below for a more detailed explanation on the local time shift rationale.</i>
 
 <br>
 
@@ -114,7 +113,7 @@ The main tasks outlined in this project will include:
     <img width= "50%" src="MercadoLibre_Close_Search_Concat_2.png">
 </p>
 
-<i>Figure 7. MercadoLibre data for the first half of 2020 (from 2020-01-to-2020-06). Here the hourly closing stock price and hourly search trend data is concatenated into two subplots for visual comparison of correlation.</i>
+<i>Figure 7. MercadoLibre data for the first half of 2020 (from 2020-01 to 2020-06). Here, the hourly closing stock price and hourly search trend data is concatenated into two subplots for visual comparison of potential correlation.</i>
 
 <br>
 <br>
@@ -182,7 +181,7 @@ The main tasks outlined in this project will include:
     <img width= "50%" src="MercadoLibre_Prophet_Future_Sales_2.png">
 </p>
 
-<i>Figure 12. Predictions for probable upcoming future sales revenue for MercadoLibre using the Prophet model prediction toolkit (in millions USD) Based on the forecast information generated above, the sales revenue forecast for the following quarter is expected to be 969.61M (USD) with a worst case scenario of 887.91M (USD), and a best-case top forecast revenue of 1,050.94M (USD)..</i>
+<i>Figure 12. Predictions for probable upcoming future sales revenue for MercadoLibre using the Prophet model prediction toolkit (in millions USD) Based on the forecast information generated above, the sales revenue forecast for the following quarter is expected to be 969.61M (USD) with a worst case scenario of 887.91M (USD), and a best-case top forecast revenue of 1,050.94M (USD).</i>
 
 <br>
 <br>
